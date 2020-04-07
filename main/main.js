@@ -11,19 +11,18 @@
 
  */
 function printReceipt(inputs) {
-  const itemInfoList = loadAllItems();
-  let itemList = generateItemList(inputs, itemInfoList);
+  let itemList = generateItemList(inputs);
   let receipt = generateReceipt(itemList);
   let formattedStr = receiptRepresentation(receipt);
   console.log(formattedStr);
   return formattedStr;
 }
 
-function generateItemList(inputs, itemInfoList){
+function generateItemList(inputs){
   let itemList = initItemWithIdAndCount(inputs);
   for(let index = 0; index < itemList.length; index++){
     let item = itemList[index];
-    setDataForItem(item, itemInfoList);
+    setDataForItem(item);
     calTotalPriceForItem(item);
   }
   return itemList;
@@ -43,7 +42,8 @@ function initItemWithIdAndCount(itemIdList){
   return resultItemList;
 }
 
-function setDataForItem(item, itemInfoList){
+function setDataForItem(item){
+  const itemInfoList = loadAllItems();
   let itemInfo = itemInfoList.filter(element => element.barcode === item.itemId);
   if(itemInfo.length != 0){
     item.name = itemInfo[0].name;
